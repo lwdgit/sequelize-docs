@@ -1,0 +1,743 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Transactions · test search plus plugin</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="legacy.html" />
+    
+    
+    <link rel="prev" href="hooks.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Documentation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="getting-started.html">
+            
+                <a href="getting-started.html">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="schema.html">
+            
+                <a href="schema.html">
+            
+                    
+                    Working with table schemas
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" >
+            
+                <span>
+            
+                    
+                    Models
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="models-definition.html">
+            
+                <a href="models-definition.html">
+            
+                    
+                    Definition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="models-usage.html">
+            
+                <a href="models-usage.html">
+            
+                    
+                    Usage
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="querying.html">
+            
+                <a href="querying.html">
+            
+                    
+                    Querying
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="scopes.html">
+            
+                <a href="scopes.html">
+            
+                    
+                    Scope
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="instances.html">
+            
+                <a href="instances.html">
+            
+                    
+                    instances
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="associations.html">
+            
+                <a href="associations.html">
+            
+                    
+                    Relations/Associations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="hooks.html">
+            
+                <a href="hooks.html">
+            
+                    
+                    Hooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.9" data-path="transactions.html">
+            
+                <a href="transactions.html">
+            
+                    
+                    Transactions
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="legacy.html">
+            
+                <a href="legacy.html">
+            
+                    
+                    Working with legacy tables
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="raw-queries.html">
+            
+                <a href="raw-queries.html">
+            
+                    
+                    Raw queries
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="migrations.html">
+            
+                <a href="migrations.html">
+            
+                    
+                    Migrations
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    API
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../api/sequelize.html">
+            
+                <a href="../api/sequelize.html">
+            
+                    
+                    Sequelize
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../api/model.html">
+            
+                <a href="../api/model.html">
+            
+                    
+                    Model
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../api/instance.html">
+            
+                <a href="../api/instance.html">
+            
+                    
+                    Instance
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../api/associations/">
+            
+                <a href="../api/associations/">
+            
+                    
+                    Associations
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.1" data-path="../api/associations/belongs-to.html">
+            
+                <a href="../api/associations/belongs-to.html">
+            
+                    
+                    belongsTo
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2" data-path="../api/associations/belongs-to-many.html">
+            
+                <a href="../api/associations/belongs-to-many.html">
+            
+                    
+                    belongsToMany
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.3" data-path="../api/associations/has-one.html">
+            
+                <a href="../api/associations/has-one.html">
+            
+                    
+                    hasOne
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.4" data-path="../api/associations/has-many.html">
+            
+                <a href="../api/associations/has-many.html">
+            
+                    
+                    hasMany
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../api/hooks.html">
+            
+                <a href="../api/hooks.html">
+            
+                    
+                    Hooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../api/transaction.html">
+            
+                <a href="../api/transaction.html">
+            
+                    
+                    Transaction
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Transactions</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p>Sequelize supports two ways of using transactions:</p>
+<ul>
+<li>One which will automatically commit or rollback the transaction based on the result of a promise chain and, (if enabled) pass the transaction to all calls within the callback</li>
+<li>And one which leaves committing, rolling back and passing the transaction to the user.</li>
+</ul>
+<p>The key difference is that the managed transaction uses a callback that expects a promise to be returned to it while the unmanaged transaction returns a promise.</p>
+<h1 id="managed-transaction-auto-callback">Managed transaction (auto-callback)</h1>
+<p>Managed transactions handle committing or rolling back the transaction automagically. You start a managed transaction by passing a callback to <code>sequelize.transaction</code>.</p>
+<p>Notice how the callback passed to <code>transaction</code> returns a promise chain, and does not explicitly call <code>t.commit()</code> nor <code>t.rollback()</code>. If all promises in the returned chain are resolved successfully the transaction is committed. If one or several of the promises are rejected, the transaction is rolled back.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">return</span> sequelize.transaction(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">t</span>) </span>{
+
+  <span class="hljs-comment">// chain all your queries here. make sure you return them.</span>
+  <span class="hljs-keyword">return</span> User.create({
+    firstName: <span class="hljs-string">&apos;Abraham&apos;</span>,
+    lastName: <span class="hljs-string">&apos;Lincoln&apos;</span>
+  }, {transaction: t}).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">user</span>) </span>{
+    <span class="hljs-keyword">return</span> user.setShooter({
+      firstName: <span class="hljs-string">&apos;John&apos;</span>,
+      lastName: <span class="hljs-string">&apos;Boothe&apos;</span>
+    }, {transaction: t});
+  });
+
+}).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">result</span>) </span>{
+  <span class="hljs-comment">// Transaction has been committed</span>
+  <span class="hljs-comment">// result is whatever the result of the promise chain returned to the transaction callback</span>
+}).catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+  <span class="hljs-comment">// Transaction has been rolled back</span>
+  <span class="hljs-comment">// err is whatever rejected the promise chain returned to the transaction callback</span>
+});
+</code></pre>
+<h3 id="throw-errors-to-rollback">Throw errors to rollback</h3>
+<p>When using the managed transaction you should <em>never</em> commit or rollback the transaction manually. If all queries are successful, but you still want to rollback the transaction (for example because of a validation failure) you should throw an error to break and reject the chain:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">return</span> sequelize.transaction(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">t</span>) </span>{
+  <span class="hljs-keyword">return</span> User.create({
+    firstName: <span class="hljs-string">&apos;Abraham&apos;</span>,
+    lastName: <span class="hljs-string">&apos;Lincoln&apos;</span>
+  }, {transaction: t}).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">user</span>) </span>{
+    <span class="hljs-comment">// Woops, the query was successful but we still want to roll back!</span>
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>();
+  });
+});
+</code></pre>
+<h3 id="automatically-pass-transactions-to-all-queries">Automatically pass transactions to all queries</h3>
+<p>In the examples above, the transaction is still manually passed, by passing <code>{ transaction: t }</code> as the second argument. To automatically pass the transaction to all queries you must install the <a href="https://github.com/othiym23/node-continuation-local-storage" target="_blank">continuation local storage</a> (CLS) module and instantiate a namespace in your own code:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> cls = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;continuation-local-storage&apos;</span>),
+    namespace = cls.createNamespace(<span class="hljs-string">&apos;my-very-own-namespace&apos;</span>);
+</code></pre>
+<p>To enable CLS you must tell sequelize which namespace to use by setting it as a property on the sequelize constructor:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Sequelize = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;sequelize&apos;</span>);
+Sequelize.cls = namespace;
+
+<span class="hljs-keyword">new</span> Sequelize(....);
+</code></pre>
+<p>Notice, that the <code>cls</code> property must be set on the <em>constructor</em>, not on an instance of sequelize. This means that all instances will share the same namespace, and that CLS is all-or-nothing - you cannot enable it only for some instances.</p>
+<p>CLS works like a thread-local storage for callbacks. What this means in practice is, that different callback chains can access local variables by using the CLS namespace. When CLS is enabled sequelize will set the <code>transaction</code> property on the namespace when a new transaction is created. Since variables set within a callback chain are private to that chain several concurrent transactions can exist at the same time:</p>
+<pre><code class="lang-js">sequelize.transaction(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">t1</span>) </span>{
+  namespace.get(<span class="hljs-string">&apos;transaction&apos;</span>) === t1; <span class="hljs-comment">// true</span>
+});
+
+sequelize.transaction(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">t2</span>) </span>{
+  namespace.get(<span class="hljs-string">&apos;transaction&apos;</span>) === t2; <span class="hljs-comment">// true</span>
+});
+</code></pre>
+<p>In most case you won&apos;t need to access <code>namespace.get(&apos;transaction&apos;)</code> directly, since all queries will automatically look for a transaction on the namespace:</p>
+<pre><code class="lang-js">sequelize.transaction(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">t1</span>) </span>{
+  <span class="hljs-comment">// With CLS enabled, the user will be created inside the transaction</span>
+  <span class="hljs-keyword">return</span> User.create({ name: <span class="hljs-string">&apos;Alice&apos;</span> });
+});
+</code></pre>
+<h1 id="concurrentpartial-transactions">Concurrent/Partial transactions</h1>
+<p>You can have concurrent transactions within a sequence of queries or have some of them excluded from any transactions. Use the <code>{transaction: }</code> option to control which transaction a query belong to:</p>
+<h3 id="without-cls-enabled">Without CLS enabled</h3>
+<pre><code class="lang-js">sequelize.transaction(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">t1</span>) </span>{
+  <span class="hljs-keyword">return</span> sequelize.transaction(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">t2</span>) </span>{
+    <span class="hljs-comment">// With CLS enable, queries here will by default use t2</span>
+    <span class="hljs-comment">// Pass in the `transaction` option to define/alter the transaction they belong to.</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.all([
+        User.create({ name: <span class="hljs-string">&apos;Bob&apos;</span> }, { transaction: <span class="hljs-literal">null</span> }),
+        User.create({ name: <span class="hljs-string">&apos;Mallory&apos;</span> }, { transaction: t1 }),
+        User.create({ name: <span class="hljs-string">&apos;John&apos;</span> }) <span class="hljs-comment">// this would default to t2</span>
+    ]);
+  });
+});
+</code></pre>
+<h1 id="isolation-levels">Isolation levels</h1>
+<p>The possible isolations levels to use when starting a transaction:</p>
+<pre><code class="lang-js">Sequelize.Transaction.ISOLATION_LEVELS.READ_UNCOMMITTED <span class="hljs-comment">// &quot;READ UNCOMMITTED&quot;</span>
+Sequelize.Transaction.ISOLATION_LEVELS.READ_COMMITTED <span class="hljs-comment">// &quot;READ COMMITTED&quot;</span>
+Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ  <span class="hljs-comment">// &quot;REPEATABLE READ&quot;</span>
+Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE <span class="hljs-comment">// &quot;SERIALIZABLE&quot;</span>
+</code></pre>
+<p>By default, sequelize uses &quot;REPEATABLE READ&quot;. If you want to use a different isolation level, pass in the desired level as the first argument:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">return</span> sequelize.transaction({
+  isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
+  }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">t</span>) </span>{
+
+  <span class="hljs-comment">// your transactions</span>
+
+  });
+</code></pre>
+<h1 id="unmanaged-transaction-then-callback">Unmanaged transaction (then-callback)</h1>
+<p>Unmanaged transactions force you to manually rollback or commit the transaction. If you don&apos;t do that, the transaction will hang until it times out. To start an unmanaged transaction, call <code>sequelize.transaction()</code> without a callback (you can still pass an options object) and call <code>then</code> on the returned promise. Notice that <code>commit()</code> and <code>rollback()</code> returns a promise.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">return</span> sequelize.transaction().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">t</span>) </span>{
+  <span class="hljs-keyword">return</span> User.create({
+    firstName: <span class="hljs-string">&apos;Homer&apos;</span>,
+    lastName: <span class="hljs-string">&apos;Simpson&apos;</span>
+  }, {transaction: t}).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">user</span>) </span>{
+    <span class="hljs-keyword">return</span> user.addSibling({
+      firstName: <span class="hljs-string">&apos;Lisa&apos;</span>,
+      lastName: <span class="hljs-string">&apos;Simpson&apos;</span>
+    }, {transaction: t});
+  }).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> t.commit();
+  }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+    <span class="hljs-keyword">return</span> t.rollback();
+  });
+});
+</code></pre>
+<h1 id="options">Options</h1>
+<p>The <code>transaction</code> method can be called with an options object as the first argument, that
+allows the configuration of the transaction.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">return</span> sequelize.transaction({ <span class="hljs-comment">/* options */</span> });
+</code></pre>
+<p>The following options (with it&apos;s default values) are available:</p>
+<pre><code class="lang-js">{
+  autocommit: <span class="hljs-literal">true</span>,
+  isolationLevel: <span class="hljs-string">&apos;REPEATABLE_READ&apos;</span>,
+  deferrable: <span class="hljs-string">&apos;NOT DEFERRABLE&apos;</span> <span class="hljs-comment">// implicit default of postgres</span>
+}
+</code></pre>
+<p>The <code>isolationLevel</code> can either be set globally when initializing the Sequelize instance or
+locally for every transaction:</p>
+<pre><code class="lang-js"><span class="hljs-comment">// globally</span>
+<span class="hljs-keyword">new</span> Sequelize(<span class="hljs-string">&apos;db&apos;</span>, <span class="hljs-string">&apos;user&apos;</span>, <span class="hljs-string">&apos;pw&apos;</span>, {
+  isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
+});
+
+<span class="hljs-comment">// locally</span>
+sequelize.transaction({
+  isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
+});
+</code></pre>
+<p>The <code>deferrable</code> option triggers an additional query after the transaction start
+that optionally set the constraint checks to be deferred or immediate. Please note
+that this is only supported in PostgreSQL.</p>
+<pre><code class="lang-js">sequelize.transaction({
+  <span class="hljs-comment">// to defer all constraints:</span>
+  deferrable: Sequelize.Deferrable.SET_DEFERRED,
+
+  <span class="hljs-comment">// to defer a specific constraint:</span>
+  deferrable: Sequelize.Deferrable.SET_DEFERRED([<span class="hljs-string">&apos;some_constraint&apos;</span>]),
+
+  <span class="hljs-comment">// to not defer constraints:</span>
+  deferrable: Sequelize.Deferrable.SET_IMMEDIATE
+})
+</code></pre>
+<h1 id="usage-with-other-sequelize-methods">Usage with other sequelize methods</h1>
+<p>The <code>transaction</code> option goes with most other options, which are usually the first argument of a method.
+For methods that take values, like <code>.create</code>, <code>.update()</code>, <code>.updateAttributes()</code> etc. <code>transaction</code> should be passed to the option in the second argument.
+If unsure, refer to the API documentation for the method you are using to be sure of the signature.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="hooks.html" class="navigation navigation-prev " aria-label="Previous page: Hooks">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="legacy.html" class="navigation navigation-next " aria-label="Next page: Working with legacy tables">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Transactions","level":"1.2.9","depth":2,"next":{"title":"Working with legacy tables","level":"1.2.10","depth":2,"path":"docs/legacy.md","ref":"./docs/legacy.md","articles":[]},"previous":{"title":"Hooks","level":"1.2.8","depth":2,"path":"docs/hooks.md","ref":"./docs/hooks.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-plus"],"root":"en-US","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"search-plus":{},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"test search plus plugin","gitbook":"*"},"file":{"path":"docs/transactions.md","mtime":"2017-03-18T14:49:58.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-18T15:00:44.968Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

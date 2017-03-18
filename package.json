@@ -1,0 +1,19 @@
+{
+  "devDependencies": {
+    "gitbook": "^3.2.2",
+    "gitbook-cli": "^2.3.0",
+    "gitbook-plugin-search-plus": "latest",
+    "pre-commit": "^1.2.2"
+  },
+  "scripts": {
+    "start": "npm run watch",
+    "build": "gitbook build . book/en-US",
+    "watch": "gitbook serve . book/en-US",
+    "commit": "git add -A",
+    "gitbook": "gitbook"
+  },
+  "pre-commit": {
+    "run": ["build", "commit"],
+    "silent": true
+  }
+}

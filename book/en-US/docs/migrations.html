@@ -1,0 +1,782 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Migrations · test search plus plugin</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="raw-queries.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Documentation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="getting-started.html">
+            
+                <a href="getting-started.html">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="schema.html">
+            
+                <a href="schema.html">
+            
+                    
+                    Working with table schemas
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" >
+            
+                <span>
+            
+                    
+                    Models
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="models-definition.html">
+            
+                <a href="models-definition.html">
+            
+                    
+                    Definition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="models-usage.html">
+            
+                <a href="models-usage.html">
+            
+                    
+                    Usage
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="querying.html">
+            
+                <a href="querying.html">
+            
+                    
+                    Querying
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="scopes.html">
+            
+                <a href="scopes.html">
+            
+                    
+                    Scope
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="instances.html">
+            
+                <a href="instances.html">
+            
+                    
+                    instances
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="associations.html">
+            
+                <a href="associations.html">
+            
+                    
+                    Relations/Associations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="hooks.html">
+            
+                <a href="hooks.html">
+            
+                    
+                    Hooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="transactions.html">
+            
+                <a href="transactions.html">
+            
+                    
+                    Transactions
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="legacy.html">
+            
+                <a href="legacy.html">
+            
+                    
+                    Working with legacy tables
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="raw-queries.html">
+            
+                <a href="raw-queries.html">
+            
+                    
+                    Raw queries
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.12" data-path="migrations.html">
+            
+                <a href="migrations.html">
+            
+                    
+                    Migrations
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    API
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../api/sequelize.html">
+            
+                <a href="../api/sequelize.html">
+            
+                    
+                    Sequelize
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../api/model.html">
+            
+                <a href="../api/model.html">
+            
+                    
+                    Model
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../api/instance.html">
+            
+                <a href="../api/instance.html">
+            
+                    
+                    Instance
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../api/associations/">
+            
+                <a href="../api/associations/">
+            
+                    
+                    Associations
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.1" data-path="../api/associations/belongs-to.html">
+            
+                <a href="../api/associations/belongs-to.html">
+            
+                    
+                    belongsTo
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2" data-path="../api/associations/belongs-to-many.html">
+            
+                <a href="../api/associations/belongs-to-many.html">
+            
+                    
+                    belongsToMany
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.3" data-path="../api/associations/has-one.html">
+            
+                <a href="../api/associations/has-one.html">
+            
+                    
+                    hasOne
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.4" data-path="../api/associations/has-many.html">
+            
+                <a href="../api/associations/has-many.html">
+            
+                    
+                    hasMany
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../api/hooks.html">
+            
+                <a href="../api/hooks.html">
+            
+                    
+                    Hooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../api/transaction.html">
+            
+                <a href="../api/transaction.html">
+            
+                    
+                    Transaction
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Migrations</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p>Sequelize <code>2.0.0</code> introduces a new CLI which is based on <a href="http://gulpjs.com/" target="_blank">gulp</a> and combines <a href="https://github.com/sequelize/cli" target="_blank">sequelize-cli</a> and <a href="https://github.com/sequelize/gulp-sequelize" target="_blank">gulp-sequelize</a>. The CLI ships support for migrations and project bootstrapping. With migrations you can transfer your existing database into another state and vice versa: Those state transitions are saved in migration files, which describe the way how to get to the new state and how to revert the changes in order to get back to the old state.</p>
+<h2 id="the-cli">The CLI</h2>
+<p>In order to use the CLI you need to install the respective package:</p>
+<pre><code class="lang-bash">$ npm install --save sequelize-cli
+</code></pre>
+<p>As with any npm package, you can use the global flag (<code>-g</code>) to install the CLI globally. If you have installed the CLI without the global flag, use <code>node_modules/.bin/sequelize [command]</code> instead of <code>sequelize [command]</code>.</p>
+<p>The CLI currently supports the following commands:</p>
+<pre><code class="lang-bash">$ sequelize db:migrate        <span class="hljs-comment"># Run pending migrations.</span>
+$ sequelize db:migrate:undo   <span class="hljs-comment"># Revert the last migration run.</span>
+$ sequelize <span class="hljs-built_in">help</span>              <span class="hljs-comment"># Display this help text.</span>
+$ sequelize init              <span class="hljs-comment"># Initializes the project.</span>
+$ sequelize migration:create  <span class="hljs-comment"># Generates a new migration file.</span>
+$ sequelize version           <span class="hljs-comment"># Prints the version number.</span>
+</code></pre>
+<p>Further and more detailed information about the available commands
+can be obtained via the help command:</p>
+<pre><code class="lang-bash">$ sequelize <span class="hljs-built_in">help</span>:init
+$ sequelize <span class="hljs-built_in">help</span>:db:migrate
+$ sequelize <span class="hljs-built_in">help</span>:db:migrate:undo
+<span class="hljs-comment"># etc</span>
+</code></pre>
+<p>The latter one for example will print out the following output:</p>
+<pre><code class="lang-bash">Sequelize [CLI: v0.0.2, ORM: v1.7.5]
+
+COMMANDS
+    sequelize db:migrate:undo -- Revert the last migration run.
+
+DESCRIPTION
+    Revert the last migration run.
+
+OPTIONS
+    --env           The environment to run the <span class="hljs-built_in">command</span> in. Default: development
+    --options-path  The path to a JSON file with additional options. Default: none
+    --coffee        Enables coffee script support. Default: <span class="hljs-literal">false</span>
+    --config        The path to the config file. Default: config/config.json
+</code></pre>
+<h2 id="skeleton">Skeleton</h2>
+<p>The following skeleton shows a typical migration file. All migrations are expected to be located in a folder called <code>migrations</code> at the very top of the project. The sequelize binary can generate a migration skeleton. See the above section for more details.</p>
+<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = {
+  up: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">queryInterface, Sequelize</span>) </span>{
+    <span class="hljs-comment">// logic for transforming into the new state</span>
+  },
+
+  down: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">queryInterface, Sequelize</span>) </span>{
+    <span class="hljs-comment">// logic for reverting the changes</span>
+  }
+}
+</code></pre>
+<p>The passed <code>queryInterface</code> object can be used to modify the database. The <code>Sequelize</code> object stores the available data types such as <code>STRING</code> or <code>INTEGER</code>. Function <code>up</code> or <code>down</code> should return a <code>Promise</code>. Here is some code:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = {
+  up: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">queryInterface, Sequelize</span>) </span>{
+    <span class="hljs-keyword">return</span> queryInterface.dropAllTables();
+  }
+}
+</code></pre>
+<p>The available methods of the queryInterface object are the following.</p>
+<h2 id="functions">Functions</h2>
+<p>Using the <code>queryInterface</code> object describe before, you will have access to most of already introduced functions. Furthermore there are some other methods, which are designed to actually change the database schema.</p>
+<h3 id="createtabletablename-attributes-options">createTable(tableName, attributes, options)</h3>
+<p>This method allows creation of new tables. It is allowed to pass simple or complex attribute definitions. You can define the encoding of the table and the table&apos;s engine via options</p>
+<pre><code class="lang-js">queryInterface.createTable(
+  <span class="hljs-string">&apos;nameOfTheNewTable&apos;</span>,
+  {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: <span class="hljs-literal">true</span>,
+      autoIncrement: <span class="hljs-literal">true</span>
+    },
+    createdAt: {
+      type: Sequelize.DATE
+    },
+    updatedAt: {
+      type: Sequelize.DATE
+    },
+    attr1: Sequelize.STRING,
+    attr2: Sequelize.INTEGER,
+    attr3: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: <span class="hljs-literal">false</span>,
+      allowNull: <span class="hljs-literal">false</span>
+    },
+    <span class="hljs-comment">//foreign key usage</span>
+    attr4: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: <span class="hljs-string">&apos;another_table_name&apos;</span>,
+            key: <span class="hljs-string">&apos;id&apos;</span>
+        },
+        onUpdate: <span class="hljs-string">&apos;cascade&apos;</span>,
+        onDelete: <span class="hljs-string">&apos;cascade&apos;</span>
+    }
+  },
+  {
+    engine: <span class="hljs-string">&apos;MYISAM&apos;</span>, <span class="hljs-comment">// default: &apos;InnoDB&apos;</span>
+    charset: <span class="hljs-string">&apos;latin1&apos;</span> <span class="hljs-comment">// default: null</span>
+  }
+)
+</code></pre>
+<h3 id="droptabletablename-options">dropTable(tableName, options)</h3>
+<p>This method allows deletion of an existing table.</p>
+<pre><code class="lang-js">queryInterface.dropTable(<span class="hljs-string">&apos;nameOfTheExistingTable&apos;</span>)
+</code></pre>
+<h3 id="dropalltablesoptions">dropAllTables(options)</h3>
+<p>This method allows deletion of all existing tables in the database.</p>
+<pre><code class="lang-js">queryInterface.dropAllTables()
+</code></pre>
+<h3 id="renametablebefore-after-options">renameTable(before, after, options)</h3>
+<p>This method allows renaming of an existing table.</p>
+<pre><code class="lang-js">queryInterface.renameTable(<span class="hljs-string">&apos;Person&apos;</span>, <span class="hljs-string">&apos;User&apos;</span>)
+</code></pre>
+<h3 id="showalltablesoptions">showAllTables(options)</h3>
+<p>This method returns the name of all existing tables in the database.</p>
+<pre><code class="lang-js">queryInterface.showAllTables().then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">tableNames</span>) </span>{})
+</code></pre>
+<h3 id="describetabletablename-options">describeTable(tableName, options)</h3>
+<p>This method returns an array of hashes containing information about all attributes in the table.</p>
+<pre><code class="lang-js">queryInterface.describeTable(<span class="hljs-string">&apos;Person&apos;</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">attributes</span>) </span>{
+  <span class="hljs-comment">/*
+    attributes will be something like:
+
+    {
+      name: {
+        type:         &apos;VARCHAR(255)&apos;, // this will be &apos;CHARACTER VARYING&apos; for pg!
+        allowNull:    true,
+        defaultValue: null
+      },
+      isBetaMember: {
+        type:         &apos;TINYINT(1)&apos;, // this will be &apos;BOOLEAN&apos; for pg!
+        allowNull:    false,
+        defaultValue: false
+      }
+    }
+  */</span>
+})
+</code></pre>
+<h3 id="addcolumntablename-attributename-datatypeoroptions-options">addColumn(tableName, attributeName, dataTypeOrOptions, options)</h3>
+<p>This method allows adding columns to an existing table. The data type can be simple or complex.</p>
+<pre><code class="lang-js">queryInterface.addColumn(
+  <span class="hljs-string">&apos;nameOfAnExistingTable&apos;</span>,
+  <span class="hljs-string">&apos;nameOfTheNewAttribute&apos;</span>,
+  Sequelize.STRING
+)
+
+<span class="hljs-comment">// or</span>
+
+queryInterface.addColumn(
+  <span class="hljs-string">&apos;nameOfAnExistingTable&apos;</span>,
+  <span class="hljs-string">&apos;nameOfTheNewAttribute&apos;</span>,
+  {
+    type: Sequelize.STRING,
+    allowNull: <span class="hljs-literal">false</span>
+  }
+)
+</code></pre>
+<h3 id="removecolumntablename-attributename-options">removeColumn(tableName, attributeName, options)</h3>
+<p>This method allows deletion of a specific column of an existing table.</p>
+<pre><code class="lang-js">queryInterface.removeColumn(<span class="hljs-string">&apos;Person&apos;</span>, <span class="hljs-string">&apos;signature&apos;</span>)
+</code></pre>
+<h3 id="changecolumntablename-attributename-datatypeoroptions-options">changeColumn(tableName, attributeName, dataTypeOrOptions, options)</h3>
+<p>This method changes the meta data of an attribute. It is possible to change the default value, allowance of null or the data type. Please make sure, that you are completely describing the new data type.</p>
+<pre><code class="lang-js">queryInterface.changeColumn(
+  <span class="hljs-string">&apos;nameOfAnExistingTable&apos;</span>,
+  <span class="hljs-string">&apos;nameOfAnExistingAttribute&apos;</span>,
+  {
+    type: Sequelize.FLOAT,
+    allowNull: <span class="hljs-literal">false</span>,
+    defaultValue: <span class="hljs-number">0.0</span>
+  }
+)
+</code></pre>
+<h3 id="renamecolumntablename-attrnamebefore-attrnameafter-options">renameColumn(tableName, attrNameBefore, attrNameAfter, options)</h3>
+<p>This methods allows renaming attributes.</p>
+<pre><code class="lang-js">queryInterface.renameColumn(<span class="hljs-string">&apos;Person&apos;</span>, <span class="hljs-string">&apos;signature&apos;</span>, <span class="hljs-string">&apos;sig&apos;</span>)
+</code></pre>
+<h3 id="addindextablename-attributes-options">addIndex(tableName, attributes, options)</h3>
+<p>This methods creates indexes for specific attributes of a table. The index name will be automatically generated if it is not passed via in the options (see below).</p>
+<pre><code class="lang-js"><span class="hljs-comment">// This example will create the index person_firstname_lastname</span>
+queryInterface.addIndex(<span class="hljs-string">&apos;Person&apos;</span>, [<span class="hljs-string">&apos;firstname&apos;</span>, <span class="hljs-string">&apos;lastname&apos;</span>])
+
+<span class="hljs-comment">// This example will create a unique index with the name SuperDuperIndex using the optional &apos;options&apos; field.</span>
+<span class="hljs-comment">// Possible options:</span>
+<span class="hljs-comment">// - indicesType: UNIQUE|FULLTEXT|SPATIAL</span>
+<span class="hljs-comment">// - indexName: The name of the index. Default is __</span>
+<span class="hljs-comment">// - parser: For FULLTEXT columns set your parser</span>
+<span class="hljs-comment">// - indexType: Set a type for the index, e.g. BTREE. See the documentation of the used dialect</span>
+<span class="hljs-comment">// - logging: A function that receives the sql query, e.g. console.log</span>
+queryInterface.addIndex(
+  <span class="hljs-string">&apos;Person&apos;</span>,
+  [<span class="hljs-string">&apos;firstname&apos;</span>, <span class="hljs-string">&apos;lastname&apos;</span>],
+  {
+    indexName: <span class="hljs-string">&apos;SuperDuperIndex&apos;</span>,
+    indicesType: <span class="hljs-string">&apos;UNIQUE&apos;</span>
+  }
+)
+</code></pre>
+<h3 id="removeindextablename-indexnameorattributes-options">removeIndex(tableName, indexNameOrAttributes, options)</h3>
+<p>This method deletes an existing index of a table.</p>
+<pre><code class="lang-js">queryInterface.removeIndex(<span class="hljs-string">&apos;Person&apos;</span>, <span class="hljs-string">&apos;SuperDuperIndex&apos;</span>)
+
+<span class="hljs-comment">// or</span>
+
+queryInterface.removeIndex(<span class="hljs-string">&apos;Person&apos;</span>, [<span class="hljs-string">&apos;firstname&apos;</span>, <span class="hljs-string">&apos;lastname&apos;</span>])
+</code></pre>
+<h2 id="programmatic-use">Programmatic use</h2>
+<p>Sequelize has a <a href="https://github.com/sequelize/umzug" target="_blank">sister library</a> for programmatically handling execution and logging of migration tasks.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="raw-queries.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Raw queries">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Migrations","level":"1.2.12","depth":2,"next":{"title":"API","level":"1.3","depth":1,"ref":"","articles":[{"title":"Sequelize","level":"1.3.1","depth":2,"path":"api/sequelize.md","ref":"./api/sequelize.md","articles":[]},{"title":"Model","level":"1.3.2","depth":2,"path":"api/model.md","ref":"./api/model.md","articles":[]},{"title":"Instance","level":"1.3.3","depth":2,"path":"api/instance.md","ref":"./api/instance.md","articles":[]},{"title":"Associations","level":"1.3.4","depth":2,"path":"api/associations/index.md","ref":"./api/associations/index.md","articles":[{"title":"belongsTo","level":"1.3.4.1","depth":3,"path":"api/associations/belongs-to.md","ref":"./api/associations/belongs-to.md","articles":[]},{"title":"belongsToMany","level":"1.3.4.2","depth":3,"path":"api/associations/belongs-to-many.md","ref":"./api/associations/belongs-to-many.md","articles":[]},{"title":"hasOne","level":"1.3.4.3","depth":3,"path":"api/associations/has-one.md","ref":"./api/associations/has-one.md","articles":[]},{"title":"hasMany","level":"1.3.4.4","depth":3,"path":"api/associations/has-many.md","ref":"./api/associations/has-many.md","articles":[]}]},{"title":"Hooks","level":"1.3.5","depth":2,"path":"api/hooks.md","ref":"./api/hooks.md","articles":[]},{"title":"Transaction","level":"1.3.6","depth":2,"path":"api/transaction.md","ref":"./api/transaction.md","articles":[]}]},"previous":{"title":"Raw queries","level":"1.2.11","depth":2,"path":"docs/raw-queries.md","ref":"./docs/raw-queries.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-plus"],"root":"en-US","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"search-plus":{},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"test search plus plugin","gitbook":"*"},"file":{"path":"docs/migrations.md","mtime":"2017-03-18T14:49:58.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-18T15:00:44.968Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
