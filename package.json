@@ -13,7 +13,24 @@
     "gitbook": "gitbook"
   },
   "pre-commit": {
-    "run": ["build", "commit"],
+    "run": [
+      "build",
+      "commit"
+    ],
     "silent": true
-  }
+  },
+  "name": "sequelize-docs",
+  "description": "",
+  "version": "1.0.0",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lwdgit/sequelize-docs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lwdgit/sequelize-docs/issues"
+  },
+  "homepage": "https://github.com/lwdgit/sequelize-docs#readme"
 }
