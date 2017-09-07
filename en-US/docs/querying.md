@@ -1,3 +1,5 @@
+# Querying
+
 ## Attributes
 
 To select only some attributes, you can use the `attributes` option. Most often, you pass an array:
@@ -123,6 +125,7 @@ $gte: 6,               // >= 6
 $lt: 10,               // < 10
 $lte: 10,              // <= 10
 $ne: 20,               // != 20
+$eq: 3,                // = 3
 $not: true,            // IS NOT TRUE
 $between: [6, 10],     // BETWEEN 6 AND 10
 $notBetween: [11, 15], // NOT BETWEEN 11 AND 15
@@ -132,6 +135,10 @@ $like: '%hat',         // LIKE '%hat'
 $notLike: '%hat'       // NOT LIKE '%hat'
 $iLike: '%hat'         // ILIKE '%hat' (case insensitive) (PG only)
 $notILike: '%hat'      // NOT ILIKE '%hat'  (PG only)
+$regexp: '^[h|a|t]'    // REGEXP/~ '^[h|a|t]' (MySQL/PG only)
+$notRegexp: '^[h|a|t]' // NOT REGEXP/!~ '^[h|a|t]' (MySQL/PG only)
+$iRegexp: '^[h|a|t]'    // ~* '^[h|a|t]' (PG only)
+$notIRegexp: '^[h|a|t]' // !~* '^[h|a|t]' (PG only)
 $like: { $any: ['cat', 'hat']}
                        // LIKE ANY ARRAY['cat', 'hat'] - also works for iLike and notLike
 $overlap: [1, 2]       // && [1, 2] (PG array overlap operator)
@@ -140,6 +147,28 @@ $contained: [1, 2]     // <@ [1, 2] (PG array contained by operator)
 $any: [2,3]            // ANY ARRAY[2, 3]::INTEGER (PG only)
 
 $col: 'user.organization_id' // = "user"."organization_id", with dialect specific column identifiers, PG in this example
+```
+
+### Range Operators
+
+Range types can be queried with all supported operators.
+
+Keep in mind, the provided range value can
+[define the bound inclusion/exclusion](/manual/tutorial/models-definition.html#range-types)
+as well.
+
+```js
+// All the above equality and inequality operators plus the following:
+
+$contains: 2           // @> '2'::integer (PG range contains element operator)
+$contains: [1, 2]      // @> [1, 2) (PG range contains range operator)
+$contained: [1, 2]     // <@ [1, 2) (PG range is contained by operator)
+$overlap: [1, 2]       // && [1, 2) (PG range overlap (have points in common) operator)
+$adjacent: [1, 2]      // -|- [1, 2) (PG range is adjacent to operator)
+$strictLeft: [1, 2]    // << [1, 2) (PG range strictly left of operator)
+$strictRight: [1, 2]   // >> [1, 2) (PG range strictly right of operator)
+$noExtendRight: [1, 2] // &< [1, 2) (PG range does not extend to the right of operator)
+$noExtendLeft: [1, 2]  // &> [1, 2) (PG range does not extend to the left of operator)
 ```
 
 ### Combinations
@@ -220,7 +249,7 @@ JSONB can be queried in three different ways.
 
 ### Relations / Associations
 ```js
-// Find all projects with a least one task where task.state === project.task
+// Find all projects with a least one task where task.state === project.state
 Project.findAll({
     include: [{
         model: Task,
@@ -244,13 +273,13 @@ Project.findAll({ offset: 5, limit: 5 })
 
 ## Ordering
 
-`order` takes an array of items to order the query by. Generally you will want to use a tuple/array of either attribute, direction or just direction to ensure proper escaping.
+`order` takes an array of items to order the query by or a sequelize method. Generally you will want to use a tuple/array of either attribute, direction or just direction to ensure proper escaping.
 
 ```js
-something.findOne({
+Subtask.findAll({
   order: [
     // Will escape username and validate DESC against a list of valid direction parameters
-    ['username', 'DESC'],
+    ['title', 'DESC'],
 
     // Will order by max(age)
     sequelize.fn('max', sequelize.col('age')),
@@ -261,18 +290,38 @@ something.findOne({
     // Will order by  otherfunction(`col1`, 12, 'lalala') DESC
     [sequelize.fn('otherfunction', sequelize.col('col1'), 12, 'lalala'), 'DESC'],
 
-    // Will order by name on an associated User
-    [User, 'name', 'DESC'],
+    // Will order an associated model's created_at using the model name as the association's name.
+    [Task, 'createdAt', 'DESC'],
 
-    // Will order by name on an associated User aliased as Friend
-    [{model: User, as: 'Friend'}, 'name', 'DESC'],
+    // Will order through an associated model's created_at using the model names as the associations' names.
+    [Task, Project, 'createdAt', 'DESC'],
 
-    // Will order by name on a nested associated Company of an associated User
-    [User, Company, 'name', 'DESC'],
+    // Will order by an associated model's created_at using the name of the association.
+    ['Task', 'createdAt', 'DESC'],
+
+    // Will order by a nested associated model's created_at using the names of the associations.
+    ['Task', 'Project', 'createdAt', 'DESC'],
+
+    // Will order by an associated model's created_at using an association object. (preferred method)
+    [Subtask.associations.Task, 'createdAt', 'DESC'],
+
+    // Will order by a nested associated model's created_at using association objects. (preferred method)
+    [Subtask.associations.Task, Task.associations.Project, 'createdAt', 'DESC'],
+
+    // Will order by an associated model's created_at using a simple association object.
+    [{model: Task, as: 'Task'}, 'createdAt', 'DESC'],
+
+    // Will order by a nested associated model's created_at simple association objects.
+    [{model: Task, as: 'Task'}, {model: Project, as: 'Project'}, 'createdAt', 'DESC']
   ]
-  // All the following statements will be treated literally so should be treated with care
-  order: 'convert(user_name using gbk)'
-  order: 'username DESC'
-  order: sequelize.literal('convert(user_name using gbk)')
+  
+  // Will order by max age descending
+  order: sequelize.literal('max(age) DESC')
+
+  // Will order by max age ascending assuming ascending is the default order when direction is omitted
+  order: sequelize.fn('max', sequelize.col('age'))
+
+  // Will order by age ascending assuming ascending is the default order when direction is omitted
+  order: sequelize.col('age')
 })
 ```

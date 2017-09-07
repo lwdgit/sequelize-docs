@@ -3,12 +3,12 @@
 To get the ball rollin' you first have to create an instance of Sequelize. Use it the following way:
 
 ```js
-var sequelize = new Sequelize('database', 'username'[, 'password'])
+const sequelize = new Sequelize('database', 'username'[, 'password'])
 ```
 This will save the passed database credentials and provide all further methods. Furthermore you can specify a non-default host/port:
 
 ```js
-var sequelize = new Sequelize('database', 'username', 'password', {
+const sequelize = new Sequelize('database', 'username', 'password', {
   host: "my.server.tld",
   port: 12345
 })
@@ -17,15 +17,15 @@ var sequelize = new Sequelize('database', 'username', 'password', {
 If you just don't have a password:
 
 ```js
-var sequelize = new Sequelize('database', 'username')
+const sequelize = new Sequelize('database', 'username')
 // or
-var sequelize = new Sequelize('database', 'username', null)
+const sequelize = new Sequelize('database', 'username', null)
 ```
 
 You can also use a connection string:
 
 ```js
-var sequelize = new Sequelize('mysql://user:pass@example.com:9821/dbname', {
+const sequelize = new Sequelize('mysql://user:pass@example.com:9821/dbname', {
   // Look to the next section for possible options
 })
 ```
@@ -35,7 +35,7 @@ var sequelize = new Sequelize('mysql://user:pass@example.com:9821/dbname', {
 Besides the host and the port, Sequelize comes with a whole bunch of options. Here they are:
 
 ```js
-var sequelize = new Sequelize('database', 'username', 'password', {
+const sequelize = new Sequelize('database', 'username', 'password', {
   // custom host; default: localhost
   host: 'my.server.tld',
  
@@ -52,13 +52,12 @@ var sequelize = new Sequelize('database', 'username', 'password', {
   logging: false,
  
   // the sql dialect of the database
-  // - default is 'mysql'
-  // - currently supported: 'mysql', 'sqlite', 'postgres', 'mariadb', 'mssql'
+  // - currently supported: 'mysql', 'sqlite', 'postgres', 'mssql'
   dialect: 'mysql',
  
   // you can also pass any dialect options to the underlying dialect library
   // - default is empty
-  // - currently supported: 'mysql', 'mariadb', 'postgres', 'mssql'
+  // - currently supported: 'mysql', 'postgres', 'mssql'
   dialectOptions: {
     socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
     supportBigNumbers: true,
@@ -93,8 +92,6 @@ var sequelize = new Sequelize('database', 'username', 'password', {
     dialectOptions: {
       collate: 'utf8_general_ci'
     },
-    classMethods: {method1: function() {}},
-    instanceMethods: {method2: function() {}},
     timestamps: true
   },
  
@@ -106,7 +103,7 @@ var sequelize = new Sequelize('database', 'username', 'password', {
  
   // use pooling in order to reduce db connection overload and to increase speed
   // currently only for mysql and postgresql (since v1.5.0)
-  pool: { maxConnections: 5, maxIdleTime: 30},
+  pool: { max: 5, idle: 30},
  
   // language is used to determine how to translate words into singular or plural form based on the [lingo project](https://github.com/visionmedia/lingo)
   // options are: en [default], es
@@ -129,7 +126,7 @@ var sequelize = new Sequelize('database', 'username', 'password', {
 Sequelize supports read replication, i.e. having multiple servers that you can connect to when you want to do a SELECT query. When you do read replication, you specify one or more servers to act as read replicas, and one server to act as the write master, which handles all writes and updates and propagates them to the replicas (note that the actual replication process is **not** handled by Sequelize, but should be set up in MySql).
 
 ```js
-var sequelize = new Sequelize('database', null, null, {
+const sequelize = new Sequelize('database', null, null, {
   dialect: 'mysql',
   port: 3306
   replication: {
@@ -140,8 +137,8 @@ var sequelize = new Sequelize('database', null, null, {
     write: { host: 'localhost', username: 'root', password: null }
   },
   pool: { // If you want to override the options used for the read pool you can do so here
-    maxConnections: 20,
-    maxIdleTime: 30000
+    max: 20,
+    idle: 30000
   },
 })
 ```
@@ -152,9 +149,12 @@ Sequelize uses a pool to manage connections to your replicas. The default option
 
 ```js
 {
-  maxConnections: 10,
-  minConnections: 0,
-  maxIdleTime:    1000
+  max: 5,
+  min: 0,
+  idle: 10000,
+  acquire: 10000,
+  evict: 60000,
+  handleDisconnects: true  
 }
 ```
 
@@ -168,38 +168,24 @@ With the release of Sequelize`1.6.0`, the library got independent from specific 
 
 ### MySQL
 
-In order to get Sequelize working nicely together with MySQL, you'll need to install`mysql@~2.5.0`or higher. Once that's done you can use it like this:
+In order to get Sequelize working nicely together with MySQL, you'll need to install`mysql2@^1.0.0-rc.10`or higher. Once that's done you can use it like this:
 
 ```js
-var sequelize = new Sequelize('database', 'username', 'password', {
-  // mysql is the default dialect, but you know...
-  // for demo purposes we are defining it nevertheless :)
-  // so: we want mysql!
+const sequelize = new Sequelize('database', 'username', 'password', {
   dialect: 'mysql'
 })
 ```
 
 **Note:** You can pass options directly to dialect library by setting the
 `dialectOptions` parameter. See [Options][0]
-for examples (currently only mysql and mariadb are supported).
-
-### MariaDB
-
-For MariaDB compatibility you have to install the package `mariasql@~0.1.20`.
-The configuration needs to look like this:
-
-```js
-var sequelize = new Sequelize('database', 'username', 'password', {
-  dialect: 'mariadb'
-})
-```
+for examples (currently only mysql is supported).
 
 ### SQLite
 
 For SQLite compatibility you'll need`sqlite3@~3.0.0`. Configure Sequelize like this:
 
 ```js
-var sequelize = new Sequelize('database', 'username', 'password', {
+const sequelize = new Sequelize('database', 'username', 'password', {
   // sqlite! now!
   dialect: 'sqlite',
  
@@ -209,12 +195,19 @@ var sequelize = new Sequelize('database', 'username', 'password', {
 })
 ```
 
-### PostgreSQL
-
-The library for PostgreSQL is`pg@~3.6.0` You'll just need to define the dialect:
+Or you can use a connection string as well with a path:
 
 ```js
-var sequelize = new Sequelize('database', 'username', 'password', {
+const sequelize = new Sequelize('sqlite:/home/abs/path/dbname.db')
+const sequelize = new Sequelize('sqlite:relativePath/dbname.db')
+```
+
+### PostgreSQL
+
+The library for PostgreSQL is`pg@^5.0.0 || ^6.0.0 || ^7.0.0` You'll just need to define the dialect:
+
+```js
+const sequelize = new Sequelize('database', 'username', 'password', {
   // gimme postgres, please!
   dialect: 'postgres'
 })
@@ -225,7 +218,7 @@ var sequelize = new Sequelize('database', 'username', 'password', {
 The library for MSSQL is`tedious@^1.7.0` You'll just need to define the dialect:
 
 ```js
-var sequelize = new Sequelize('database', 'username', 'password', {
+const sequelize = new Sequelize('database', 'username', 'password', {
   dialect: 'mssql'
 })
 ```
@@ -241,7 +234,7 @@ Here is how it works:
 sequelize.query('your query', [, options])
 
 // Quick example
-sequelize.query("SELECT * FROM myTable").then(function(myTableRows) {
+sequelize.query("SELECT * FROM myTable").then(myTableRows => {
   console.log(myTableRows)
 })
 
@@ -249,7 +242,7 @@ sequelize.query("SELECT * FROM myTable").then(function(myTableRows) {
 // This allows you to easily map a query to a predefined model for sequelize e.g:
 sequelize
   .query('SELECT * FROM projects', { model: Projects })
-  .then(function(projects){
+  .then(projects => {
     // Each record will now be mapped to the project's model.
     console.log(projects)
   })
@@ -276,7 +269,7 @@ sequelize
 // supersede and return a raw object.
 sequelize
   .query('SELECT * FROM projects', { raw: true })
-  .then(function(projects) {
+  .then(projects => {
     console.log(projects)
   })
 ```
@@ -297,7 +290,7 @@ sequelize
     'SELECT * FROM projects WHERE status = ?',
     { raw: true, replacements: ['active']
   )
-  .then(function(projects) {
+  .then(projects => {
     console.log(projects)
   })
 
@@ -306,7 +299,7 @@ sequelize
     'SELECT * FROM projects WHERE status = :status ',
     { raw: true, replacements: { status: 'active' } }
   )
-  .then(function(projects) {
+  .then(projects => {
     console.log(projects)
   })
 ```
@@ -314,7 +307,7 @@ sequelize
 **One note:** If the attribute names of the table contain dots, the resulting objects will be nested:
 
 ```js
-sequelize.query('select 1 as `foo.bar.baz`').then(function(rows) {
+sequelize.query('select 1 as `foo.bar.baz`').then(rows => {
   console.log(JSON.stringify(rows))
 
   /*

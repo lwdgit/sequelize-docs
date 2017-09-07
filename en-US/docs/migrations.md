@@ -1,3 +1,5 @@
+# Migrations
+
 Sequelize `2.0.0` introduces a new CLI which is based on [gulp][0] and combines [sequelize-cli][1] and [gulp-sequelize][2]. The CLI ships support for migrations and project bootstrapping. With migrations you can transfer your existing database into another state and vice versa: Those state transitions are saved in migration files, which describe the way how to get to the new state and how to revert the changes in order to get back to the old state.
 
 ## The CLI
@@ -55,11 +57,11 @@ The following skeleton shows a typical migration file. All migrations are expect
 
 ```js
 module.exports = {
-  up: function(queryInterface, Sequelize) {
+  up: (queryInterface, Sequelize) => {
     // logic for transforming into the new state
   },
  
-  down: function(queryInterface, Sequelize) {
+  down: (queryInterface, Sequelize) => {
     // logic for reverting the changes
   }
 }
@@ -69,7 +71,7 @@ The passed `queryInterface` object can be used to modify the database. The `Sequ
 
 ```js
 module.exports = {
-  up: function(queryInterface, Sequelize) {
+  up: (queryInterface, Sequelize) => {
     return queryInterface.dropAllTables();
   }
 }
@@ -79,7 +81,7 @@ The available methods of the queryInterface object are the following.
 
 ## Functions
 
-Using the `queryInterface` object describe before, you will have access to most of already introduced functions. Furthermore there are some other methods, which are designed to actually change the database schema.
+Using the `queryInterface` object described before, you will have access to most of already introduced functions. Furthermore there are some other methods, which are designed to actually change the database schema.
 
 ### createTable(tableName, attributes, options)
 
@@ -109,18 +111,19 @@ queryInterface.createTable(
     },
     //foreign key usage
     attr4: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: 'another_table_name',
-            key: 'id'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'another_table_name',
+        key: 'id'
+      },
+      onUpdate: 'cascade',
+      onDelete: 'cascade'
     }
   },
   {
-    engine: 'MYISAM', // default: 'InnoDB'
-    charset: 'latin1' // default: null
+    engine: 'MYISAM',                     // default: 'InnoDB'
+    charset: 'latin1',                    // default: null
+    schema: 'public'                      // default: public, PostgreSQL only.
   }
 )
 ```
@@ -154,7 +157,7 @@ queryInterface.renameTable('Person', 'User')
 This method returns the name of all existing tables in the database.
 
 ```js
-queryInterface.showAllTables().then(function(tableNames) {})
+queryInterface.showAllTables().then(tableNames => {})
 ```
 
 ### describeTable(tableName, options)
@@ -162,7 +165,7 @@ queryInterface.showAllTables().then(function(tableNames) {})
 This method returns an array of hashes containing information about all attributes in the table.
 
 ```js
-queryInterface.describeTable('Person').then(function(attributes) {
+queryInterface.describeTable('Person').then(attributes => {
   /*
     attributes will be something like:
  
@@ -182,7 +185,7 @@ queryInterface.describeTable('Person').then(function(attributes) {
 })
 ```
 
-### addColumn(tableName, attributeName, dataTypeOrOptions, options)
+### addColumn(tableNameOrOptions, attributeName, dataTypeOrOptions, options)
 
 This method allows adding columns to an existing table. The data type can be simple or complex.
 
@@ -203,14 +206,32 @@ queryInterface.addColumn(
     allowNull: false
   }
 )
+
+// or with an explicit schema:
+
+queryInterface.addColumn({
+    tableName: 'Person',
+    schema: 'public'
+  },
+  'signature',
+  Sequelize.STRING
+)
+
 ```
 
-### removeColumn(tableName, attributeName, options)
+### removeColumn(tableNameOrOptions, attributeName, options)
 
 This method allows deletion of a specific column of an existing table.
 
 ```js
 queryInterface.removeColumn('Person', 'signature')
+
+// or with an explicit schema:
+
+queryInterface.removeColumn({
+  tableName: 'Person',
+  schema: 'public'
+}, 'signature');
 ```
 
 ### changeColumn(tableName, attributeName, dataTypeOrOptions, options)
@@ -252,12 +273,25 @@ queryInterface.addIndex('Person', ['firstname', 'lastname'])
 // - parser: For FULLTEXT columns set your parser
 // - indexType: Set a type for the index, e.g. BTREE. See the documentation of the used dialect
 // - logging: A function that receives the sql query, e.g. console.log
+// - where: A hash of attributes to limit your index(Filtered Indexes - MSSQL & PostgreSQL only)
 queryInterface.addIndex(
   'Person',
   ['firstname', 'lastname'],
   {
     indexName: 'SuperDuperIndex',
     indicesType: 'UNIQUE'
+  }
+)
+
+queryInterface.addIndex(
+  'Person',
+  ['firstname', 'lastname'],
+  {
+    where: {
+      lastname: {
+        $ne: null
+      }
+    }
   }
 )
 ```
@@ -272,6 +306,85 @@ queryInterface.removeIndex('Person', 'SuperDuperIndex')
 // or
  
 queryInterface.removeIndex('Person', ['firstname', 'lastname'])
+```
+
+### addConstraint(tableName, attributes, options)
+This method adds a new constraint of the specified type.
+ - tableName - Name of the table to add the constraint on
+ - attributes - Array of column names to apply the constraint over
+ - options - An object to define the constraint name, type etc.
+
+Avalable options:
+ - type - Type of constraint. One of the values in available constraints(case insensitive)
+ - name - Name of the constraint. If not specifed, sequelize automatically creates a named constraint based on constraint type, table & column names
+ - defaultValue - The value for the default constraint
+ - where - Where clause/expression for the CHECK constraint
+ - references - Object specifying target table, column name to create foreign key constraint
+ - references.table - Target table name or table
+ - references.field - Target column name
+Available constraints:
+ - UNIQUE
+ - DEFAULT (MSSQL only)
+ - CHECK (MySQL - Ignored by the database engine )
+ - FOREIGN KEY
+ - PRIMARY KEY
+
+```js
+//UNIQUE
+queryInterface.addConstraint('Users', ['email'], {
+  type: 'unique',
+  name: 'custom_unique_constraint_name'
+});
+
+//CHECK
+queryInterface.addConstraint('Users', ['roles'], {
+  type: 'check',
+  where: {
+    roles: ['user', 'admin', 'moderator', 'guest']
+  }
+});
+
+//Default - MSSQL only
+queryInterface.addConstraint('Users', ['roles'], {
+  type: 'default',
+  defaultValue: 'guest'
+});
+
+//Primary Key
+queryInterface.addConstraint('Users', ['username'], {
+  type: 'primary key',
+  name: 'custom_primary_constraint_name'
+});
+
+//Foreign Key
+queryInterface.addConstraint('Posts', ['username'], {
+  type: 'FOREIGN KEY',
+  name: 'custom_fkey_constraint_name',
+  references: { //Required field
+    table: 'target_table_name',
+    field: 'target_column_name'
+  },
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
+});
+```
+
+### removeConstraint(tableName, constraintName, options)
+
+This method deletes an existing constraint of a table
+
+```js
+queryInterface.removeConstraint('Users', 'my_constraint_name');
+
+```
+
+### showConstraint(tableName, options)
+
+Lists all the constraints on the given table.
+
+```js
+queryInterface.showConstraint('Users');
+// Returns array of objects/constraints
 ```
 
 ## Programmatic use

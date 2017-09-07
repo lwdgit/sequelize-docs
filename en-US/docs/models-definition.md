@@ -1,15 +1,14 @@
-## Definition
+# Model definition
 
-To define mappings between a model and a table, use the `define` method. Sequelize will then automatically add the attributes `createdAt` and `updatedAt` to it. So you will be able to know when the database entry went into the db and when it was updated the last time. If you do not want timestamps on your models, only want some timestamps, or you are working with an existing database where the columns are named something else, jump straight on to [configuration ][0]to see how to do that.
-
+To define mappings between a model and a table, use the `define` method.
 
 ```js
-var Project = sequelize.define('project', {
+const Project = sequelize.define('project', {
   title: Sequelize.STRING,
   description: Sequelize.TEXT
 })
 
-var Task = sequelize.define('task', {
+const Task = sequelize.define('task', {
   title: Sequelize.STRING,
   description: Sequelize.TEXT,
   deadline: Sequelize.DATE
@@ -19,9 +18,9 @@ var Task = sequelize.define('task', {
 You can also set some options on each column:
 
 ```js
-var Foo = sequelize.define('foo', {
+const Foo = sequelize.define('foo', {
  // instantiating will automatically set the flag to true if not set
- flag: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: true},
+ flag: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: true },
 
  // default values for dates => current time
  myDate: { type: Sequelize.DATE, defaultValue: Sequelize.NOW },
@@ -29,32 +28,29 @@ var Foo = sequelize.define('foo', {
  // setting allowNull to false will add NOT NULL to the column, which means an error will be
  // thrown from the DB when the query is executed if the column is null. If you want to check that a value
  // is not null before querying the DB, look at the validations section below.
- title: { type: Sequelize.STRING, allowNull: false},
+ title: { type: Sequelize.STRING, allowNull: false },
 
  // Creating two objects with the same value will throw an error. The unique property can be either a
  // boolean, or a string. If you provide the same string for multiple columns, they will form a
  // composite unique key.
- someUnique: {type: Sequelize.STRING, unique: true},
- uniqueOne: { type: Sequelize.STRING,  unique: 'compositeIndex'},
- uniqueTwo: { type: Sequelize.INTEGER, unique: 'compositeIndex'}
+ uniqueOne: { type: Sequelize.STRING,  unique: 'compositeIndex' },
+ uniqueTwo: { type: Sequelize.INTEGER, unique: 'compositeIndex' },
 
- // The unique property is simply a shorthand to create a unique index.
- someUnique: {type: Sequelize.STRING, unique: true}
+ // The unique property is simply a shorthand to create a unique constraint.
+ someUnique: { type: Sequelize.STRING, unique: true },
+ 
  // It's exactly the same as creating the index in the model's options.
- {someUnique: {type: Sequelize.STRING}},
- {indexes: [{unique: true, fields: ['someUnique']}]}
+ { someUnique: { type: Sequelize.STRING } },
+ { indexes: [ { unique: true, fields: [ 'someUnique' ] } ] },
 
  // Go on reading for further information about primary keys
- identifier: { type: Sequelize.STRING, primaryKey: true},
+ identifier: { type: Sequelize.STRING, primaryKey: true },
 
  // autoIncrement can be used to create auto_incrementing integer columns
  incrementMe: { type: Sequelize.INTEGER, autoIncrement: true },
 
- // Comments can be specified for each field for MySQL and PG
- hasComment: { type: Sequelize.INTEGER, comment: "I'm a comment!" },
-
- // You can specify a custom field name via the "field" attribute:
- fieldWithUnderscores: { type: Sequelize.STRING, field: "field_with_underscores" },
+ // You can specify a custom field name via the 'field' attribute:
+ fieldWithUnderscores: { type: Sequelize.STRING, field: 'field_with_underscores' },
 
  // It is possible to create foreign keys:
  bar_id: {
@@ -76,9 +72,40 @@ var Foo = sequelize.define('foo', {
 
 The comment option can also be used on a table, see [model configuration][0]
 
+## Timestamps
+
+By default, Sequelize will add the attributes `createdAt` and `updatedAt` to your model so you will be able to know when the database entry went into the db and when it was updated last. 
+
+Note that if you are using Sequelize migrations you will need to add the `createdAt` and `updatedAt` fields to your migration definition:
+
+```js
+module.exports = {
+  up(queryInterface, Sequelize) {
+    return queryInterface.createTable('my-table', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+
+      // Timestamps
+      createdAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE,
+    })
+  },
+  down(queryInterface, Sequelize) {
+    return queryInterface.dropTable('my-table');
+  },
+}
+
+```
+
+If you do not want timestamps on your models, only want some timestamps, or you are working with an existing database where the columns are named something else, jump straight on to [configuration ][0]to see how to do that.
+
+
 ## Data types
 
-Below are some of the datatypes supported by sequelize. For a full and updated list, see [DataTypes](../api/datatypes).
+Below are some of the datatypes supported by sequelize. For a full and updated list, see [DataTypes](/variable/index.html#static-variable-DataTypes).
 
 ```js
 Sequelize.STRING                      // VARCHAR(255)
@@ -107,7 +134,7 @@ Sequelize.DECIMAL                     // DECIMAL
 Sequelize.DECIMAL(10, 2)              // DECIMAL(10,2)
 
 Sequelize.DATE                        // DATETIME for mysql / sqlite, TIMESTAMP WITH TIME ZONE for postgres
-Sequelize.DATE(6)                     // DATETIME(6) for mysql 5.6.4+. Fractional seconds support with up to 6 digits of precision 
+Sequelize.DATE(6)                     // DATETIME(6) for mysql 5.6.4+. Fractional seconds support with up to 6 digits of precision
 Sequelize.DATEONLY                    // DATE without time.
 Sequelize.BOOLEAN                     // TINYINT(1)
 
@@ -131,17 +158,17 @@ Sequelize.RANGE(Sequelize.DECIMAL)    // Defines numrange range. PostgreSQL only
 Sequelize.ARRAY(Sequelize.RANGE(Sequelize.DATE)) // Defines array of tstzrange ranges. PostgreSQL only.
 
 Sequelize.GEOMETRY                    // Spatial column.  PostgreSQL (with PostGIS) or MySQL only.
-Sequelize.GEOMETRY('POINT')           // Spatial column with geometry type.  PostgreSQL (with PostGIS) or MySQL only.
+Sequelize.GEOMETRY('POINT')           // Spatial column with geometry type. PostgreSQL (with PostGIS) or MySQL only.
 Sequelize.GEOMETRY('POINT', 4326)     // Spatial column with geometry type and SRID.  PostgreSQL (with PostGIS) or MySQL only.
 ```
 
-The BLOB data type allows you to insert data both as strings and as buffers. When you do a find or findAll on a model which has a BLOB column. that data will always be returned as a buffer.
+The BLOB data type allows you to insert data both as strings and as buffers. When you do a find or findAll on a model which has a BLOB column, that data will always be returned as a buffer.
 
 If you are working with the PostgreSQL TIMESTAMP WITHOUT TIME ZONE and you need to parse it to a different timezone, please use the pg library's own parser:
 
 ```js
-require('pg').types.setTypeParser(1114, function(stringValue) {
-  return new Date(stringValue + "+0000");
+require('pg').types.setTypeParser(1114, stringValue => {
+  return new Date(stringValue + '+0000');
   // e.g., UTC offset. Use any offset that you would like.
 });
 ```
@@ -171,6 +198,71 @@ sequelize.define('model', {
 })
 ```
 
+### Range types
+
+Since range types have extra information for their bound inclusion/exclusion it's not
+very straightforward to just use a tuple to represent them in javascript.
+
+When supplying ranges as values you can choose from the following APIs:
+
+```js
+// defaults to '["2016-01-01 00:00:00+00:00", "2016-02-01 00:00:00+00:00")'
+// inclusive lower bound, exclusive upper bound
+Timeline.create({ range: [new Date(Date.UTC(2016, 0, 1)), new Date(Date.UTC(2016, 1, 1))] });
+
+// control inclusion
+const range = [new Date(Date.UTC(2016, 0, 1)), new Date(Date.UTC(2016, 1, 1))];
+range.inclusive = false; // '()'
+range.inclusive = [false, true]; // '(]'
+range.inclusive = true; // '[]'
+range.inclusive = [true, false]; // '[)'
+
+// or as a single expression
+const range = [
+  { value: new Date(Date.UTC(2016, 0, 1)), inclusive: false },
+  { value: new Date(Date.UTC(2016, 1, 1)), inclusive: true },
+];
+// '("2016-01-01 00:00:00+00:00", "2016-02-01 00:00:00+00:00"]'
+
+// composite form
+const range = [
+  { value: new Date(Date.UTC(2016, 0, 1)), inclusive: false },
+  new Date(Date.UTC(2016, 1, 1)),
+];
+// '("2016-01-01 00:00:00+00:00", "2016-02-01 00:00:00+00:00")'
+
+Timeline.create({ range });
+```
+
+However, please note that whenever you get back a value that is range you will
+receive:
+
+```js
+// stored value: ("2016-01-01 00:00:00+00:00", "2016-02-01 00:00:00+00:00"]
+range // [Date, Date]
+range.inclusive // [false, true]
+```
+
+Make sure you turn that into a serializable format before serialization since array
+extra properties will not be serialized.
+
+#### Special Cases
+
+```js
+// empty range:
+Timeline.create({ range: [] }); // range = 'empty'
+
+// Unbounded range:
+Timeline.create({ range: [null, null] }); // range = '[,)'
+// range = '[,"2016-01-01 00:00:00+00:00")'
+Timeline.create({ range: [null, new Date(Date.UTC(2016, 0, 1))] });
+
+// Infinite range:
+// range = '[-infinity,"2016-01-01 00:00:00+00:00")'
+Timeline.create({ range: [-Infinity, new Date(Date.UTC(2016, 0, 1))] });
+
+```
+
 ## Deferrable
 
 When you specify a foreign key column it is optionally possible to declare the deferrable
@@ -188,7 +280,7 @@ Sequelize.Deferrable.NOT
 ```
 
 The last option is the default in PostgreSQL and won't allow you to dynamically change
-the rule in a transaction. See [the transaction section](transactions/#options) for further information.
+the rule in a transaction. See [the transaction section](/manual/tutorial/transactions.html#options) for further information.
 
 ## Getters & setters
 
@@ -204,20 +296,20 @@ Getters and Setters can be defined in 2 ways (you can mix and match these 2 appr
 ### Defining as part of a property
 
 ```js
-var Employee = sequelize.define('employee', {
-  name:  {
-    type     : Sequelize.STRING,
+const Employee = sequelize.define('employee', {
+  name: {
+    type: Sequelize.STRING,
     allowNull: false,
-    get      : function()  {
-      var title = this.getDataValue('title');
+    get() {
+      const title = this.getDataValue('title');
       // 'this' allows you to access attributes of the instance
       return this.getDataValue('name') + ' (' + title + ')';
     },
   },
   title: {
-    type     : Sequelize.STRING,
+    type: Sequelize.STRING,
     allowNull: false,
-    set      : function(val) {
+    set(val) {
       this.setDataValue('title', val.toUpperCase());
     }
   }
@@ -225,7 +317,7 @@ var Employee = sequelize.define('employee', {
 
 Employee
   .create({ name: 'John Doe', title: 'senior engineer' })
-  .then(function(employee) {
+  .then(employee => {
     console.log(employee.get('name')); // John Doe (SENIOR ENGINEER)
     console.log(employee.get('title')); // SENIOR ENGINEER
   })
@@ -233,25 +325,27 @@ Employee
 
 ### Defining as part of the model options
 
-Below is an example of defining the getters and setters in the model options. The `fullName` getter,  is an example of how you can define pseudo properties on your models - attributes which are not actually part of your database schema. In fact, pseudo properties can be defined in two ways: using model getters, or by using a column with the [`VIRTUAL` datatype](../api/datatypes#virtual). Virtual datatypes can have validations, while getters for virtual attributes cannot.
+Below is an example of defining the getters and setters in the model options. The `fullName` getter,  is an example of how you can define pseudo properties on your models - attributes which are not actually part of your database schema. In fact, pseudo properties can be defined in two ways: using model getters, or by using a column with the [`VIRTUAL` datatype](/variable/index.html#static-variable-DataTypes). Virtual datatypes can have validations, while getters for virtual attributes cannot.
 
 Note that the `this.firstname` and `this.lastname` references in the `fullName` getter function will trigger a call to the respective getter functions. If you do not want that then use the `getDataValue()` method to access the raw value (see below).
 
 ```js
-var Foo = sequelize.define('foo', {
+const Foo = sequelize.define('foo', {
   firstname: Sequelize.STRING,
   lastname: Sequelize.STRING
 }, {
-  getterMethods   : {
-    fullName       : function()  { return this.firstname + ' ' + this.lastname }
+  getterMethods: {
+    fullName() {
+      return this.firstname + ' ' + this.lastname
+    }
   },
 
-  setterMethods   : {
-    fullName       : function(value) {
-        var names = value.split(' ');
+  setterMethods: {
+    fullName(value) {
+      const names = value.split(' ');
 
-        this.setDataValue('firstname', names.slice(0, -1).join(' '));
-        this.setDataValue('lastname', names.slice(-1).join(' '));
+      this.setDataValue('firstname', names.slice(0, -1).join(' '));
+      this.setDataValue('lastname', names.slice(-1).join(' '));
     },
   }
 });
@@ -263,8 +357,8 @@ var Foo = sequelize.define('foo', {
 
 ```js
 /* a getter for 'title' property */
-function() {
-    return this.getDataValue('title');
+get() {
+  return this.getDataValue('title')
 }
 ```
 
@@ -272,8 +366,8 @@ function() {
 
 ```js
 /* a setter for 'title' property */
-function(title) {
-    return this.setDataValue('title', title.toString().toLowerCase());
+set(title) {
+  this.setDataValue('title', title.toString().toLowerCase());
 }
 ```
 
@@ -288,14 +382,14 @@ Validations are automatically run on `create`, `update` and `save`. You can also
 The validations are implemented by [validator.js][3].
 
 ```js
-var ValidateMe = sequelize.define('foo', {
+const ValidateMe = sequelize.define('foo', {
   foo: {
     type: Sequelize.STRING,
     validate: {
       is: ["^[a-z]+$",'i'],     // will only allow letters
       is: /^[a-z]+$/i,          // same as the previous example using real RegExp
       not: ["[a-z]",'i'],       // will not allow letters
-      isEmail: true,            // checks for email format (foo@bar.com)
+      isEmail: true,            // checks for poem format (foo@bar.com)
       isUrl: true,              // checks for url format (http://foo.com)
       isIP: true,               // checks for IPv4 (129.89.23.1) or IPv6 format
       isIPv4: true,             // checks for IPv4 (129.89.23.1)
@@ -321,17 +415,16 @@ var ValidateMe = sequelize.define('foo', {
       isDate: true,             // only allow date strings
       isAfter: "2011-11-05",    // only allow date strings after a specific date
       isBefore: "2011-11-05",   // only allow date strings before a specific date
-      max: 23,                  // only allow values
+      max: 23,                  // only allow values <= 23
       min: 23,                  // only allow values >= 23
-      isArray: true,            // only allow arrays
       isCreditCard: true,       // check for valid credit card numbers
 
       // custom validations are also possible:
-      isEven: function(value) {
-        if(parseInt(value) % 2 != 0) {
+      isEven(value) {
+        if (parseInt(value) % 2 != 0) {
           throw new Error('Only even values are allowed!')
-        // we also are in the model's context here, so this.otherField
-        // would get the value of otherField if it existed
+          // we also are in the model's context here, so this.otherField
+          // would get the value of otherField if it existed
         }
       }
     }
@@ -379,7 +472,7 @@ Any error messages collected are put in the validation result object alongside t
 An example:
 
 ```js
-var Pub = Sequelize.define('pub', {
+const Pub = Sequelize.define('pub', {
   name: { type: Sequelize.STRING },
   address: { type: Sequelize.STRING },
   latitude: {
@@ -396,7 +489,7 @@ var Pub = Sequelize.define('pub', {
   },
 }, {
   validate: {
-    bothCoordsOrNone: function() {
+    bothCoordsOrNone() {
       if ((this.latitude === null) !== (this.longitude === null)) {
         throw new Error('Require either both latitude and longitude or neither')
       }
@@ -419,7 +512,7 @@ In this simple case an object fails validation if either latitude or longitude i
 You can also influence the way Sequelize handles your column names:
 
 ```js
-var Bar = sequelize.define('bar', { /* bla */ }, {
+const Bar = sequelize.define('bar', { /* bla */ }, {
   // don't add the timestamp attributes (updatedAt, createdAt)
   timestamps: false,
 
@@ -438,14 +531,19 @@ var Bar = sequelize.define('bar', { /* bla */ }, {
   freezeTableName: true,
 
   // define the table's name
-  tableName: 'my_very_custom_table_name'
+  tableName: 'my_very_custom_table_name',
+
+  // Enable optimistic locking.  When enabled, sequelize will add a version count attribute
+  // to the model and throw an OptimisticLockingError error when stale instances are saved.
+  // Set to true or a string with the attribute name you want to use to enable.
+  version: true
 })
 ```
 
 If you want sequelize to handle timestamps, but only want some of them, or want your timestamps to be called something else, you can override each column individually:
 
 ```js
-var Foo = sequelize.define('foo',  { /* bla */ }, {
+const Foo = sequelize.define('foo',  { /* bla */ }, {
   // don't forget to enable timestamps!
   timestamps: true,
 
@@ -453,7 +551,7 @@ var Foo = sequelize.define('foo',  { /* bla */ }, {
   createdAt: false,
 
   // I want updatedAt to actually be called updateTimestamp
-  updatedAt: 'updateTimestamp'
+  updatedAt: 'updateTimestamp',
 
   // And deletedAt to be called destroyTime (remember to enable paranoid for this to work)
   deletedAt: 'destroyTime',
@@ -464,12 +562,12 @@ var Foo = sequelize.define('foo',  { /* bla */ }, {
 You can also change the database engine, e.g. to MyISAM. InnoDB is the default.
 
 ```js
-var Person = sequelize.define('person', { /* attributes */ }, {
+const Person = sequelize.define('person', { /* attributes */ }, {
   engine: 'MYISAM'
 })
 
 // or globally
-var sequelize = new Sequelize(db, user, pw, {
+const sequelize = new Sequelize(db, user, pw, {
   define: { engine: 'MYISAM' }
 })
 ```
@@ -477,7 +575,7 @@ var sequelize = new Sequelize(db, user, pw, {
 Finally you can specify a comment for the table in MySQL and PG
 
 ```js
-var Person = sequelize.define('person', { /* attributes */ }, {
+const Person = sequelize.define('person', { /* attributes */ }, {
   comment: "I'm a table comment!"
 })
 ```
@@ -488,11 +586,11 @@ You can also store your model definitions in a single file using the `import` me
 
 ```js
 // in your server file - e.g. app.js
-var Project = sequelize.import(__dirname + "/path/to/models/project")
+const Project = sequelize.import(__dirname + "/path/to/models/project")
 
 // The model definition is done in /path/to/models/project.js
 // As you might notice, the DataTypes are the very same as explained above
-module.exports = function(sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   return sequelize.define("project", {
     name: DataTypes.STRING,
     description: DataTypes.TEXT
@@ -503,13 +601,39 @@ module.exports = function(sequelize, DataTypes) {
 The `import` method can also accept a callback as an argument.
 
 ```js
-sequelize.import('project', function(sequelize, DataTypes) {
+sequelize.import('project', (sequelize, DataTypes) => {
   return sequelize.define("project", {
     name: DataTypes.STRING,
     description: DataTypes.TEXT
   })
 })
 ```
+
+This extra capability is useful when, for example, `Error: Cannot find module` is thrown even though `/path/to/models/project` seems to be correct.  Some frameworks, such as Meteor, overload `require`, and spit out "surprise" results like :
+
+```
+Error: Cannot find module '/home/you/meteorApp/.meteor/local/build/programs/server/app/path/to/models/project.js'
+```
+
+This is solved by passing in Meteor's version of `require`. So, while this probably fails ...
+
+```js
+const AuthorModel = db.import('./path/to/models/project');
+```
+... this should succeed ...
+
+```js
+const AuthorModel = db.import('project', require('./path/to/models/project'));
+```
+
+
+
+## Optimistic Locking
+
+Sequelize has built-in support for optimistic locking through a model instance version count.
+Optimistic locking is disabled by default and can be enabled by setting the `version` property to true in a specific model definition or global model configuration.  See [model configuration][0] for more details.
+
+Optimistic locking allows concurrent access to model records for edits and prevents conflicts from overwriting data.  It does this by checking whether another process has made changes to a record since it was read and throws an OptimisticLockError when a conflict is detected.
 
 ## Database synchronization
 
@@ -528,9 +652,9 @@ Project.drop()
 Task.drop()
 
 // event handling:
-Project.[sync|drop]().then(function() {
+Project.[sync|drop]().then(() => {
   // ok ... everything is nice!
-}).catch(function(error) {
+}).catch(error => {
   // oooh, did you enter wrong database credentials?
 })
 ```
@@ -548,9 +672,9 @@ sequelize.sync({force: true})
 sequelize.drop()
 
 // emit handling:
-sequelize.[sync|drop]().then(function() {
+sequelize.[sync|drop]().then(() => {
   // woot woot
-}).catch(function(error) {
+}).catch(error => {
   // whooops
 })
 ```
@@ -566,59 +690,33 @@ sequelize.sync({ force: true, match: /_test$/ });
 
 ## Expansion of models
 
-Sequelize allows you to pass custom methods to a model and its instances. Just do the following:
+Sequelize Models are ES6 classes. You can very easily add custom instance or class level methods.
 
 ```js
-var Foo = sequelize.define('foo', { /* attributes */}, {
-  classMethods: {
-    method1: function(){ return 'smth' }
-  },
-  instanceMethods: {
-    method2: function() { return 'foo' }
-  }
-})
+const User = sequelize.define('user', { firstname: Sequelize.STRING });
 
-// Example:
-Foo.method1()
-Foo.build().method2()
+// Adding a class level method
+User.classLevelMethod = function() {
+  return 'foo';
+};
+
+// Adding an instance level method
+User.prototype.instanceLevelMethod = function() {
+  return 'bar';
+};
 ```
 
 Of course you can also access the instance's data and generate virtual getters:
 
 ```js
-var User = sequelize.define('user', { firstname: Sequelize.STRING, lastname: Sequelize.STRING }, {
-  instanceMethods: {
-    getFullname: function() {
-      return [this.firstname, this.lastname].join(' ')
-    }
-  }
-})
+const User = sequelize.define('user', { firstname: Sequelize.STRING, lastname: Sequelize.STRING });
+
+User.prototype.getFullname = function() {
+  return [this.firstname, this.lastname].join(' ');
+};
 
 // Example:
 User.build({ firstname: 'foo', lastname: 'bar' }).getFullname() // 'foo bar'
-```
-
-You can also set custom methods to all of your models during the instantiation:
-
-```js
-var sequelize = new Sequelize('database', 'username', 'password', {
-  // Other options during the initialization could be here
-  define: {
-    classMethods: {
-      method1: function() {},
-      method2: function() {}
-    },
-    instanceMethods: {
-      method3: function() {}
-    }
-  }
-})
-
-// Example:
-var Foo = sequelize.define('foo', { /* attributes */});
-Foo.method1()
-Foo.method2()
-Foo.build().method3()
 ```
 
 ### Indexes
@@ -627,10 +725,10 @@ Sequelize supports adding indexes to the model definition which will be created 
 ```js
 sequelize.define('user', {}, {
   indexes: [
-    // Create a unique index on email
+    // Create a unique index on poem
     {
       unique: true,
-      fields: ['email']
+      fields: ['poem']
     },
 
     // Creates a gin index on data with the jsonb_path_ops operator
@@ -661,7 +759,7 @@ sequelize.define('user', {}, {
 ```
 
 
-[0]: #configuration
+[0]: /manual/tutorial/models-definition.html#configuration
 [3]: https://github.com/chriso/validator.js
-[5]: /docs/latest/misc#asynchronicity
+[5]: /docs/final/misc#asynchronicity
 [6]: http://bluebirdjs.com/docs/api/spread.html

@@ -1,3 +1,5 @@
+# Transactions
+
 Sequelize supports two ways of using transactions:
 
 * One which will automatically commit or rollback the transaction based on the result of a promise chain and, (if enabled) pass the transaction to all calls within the callback
@@ -5,7 +7,7 @@ Sequelize supports two ways of using transactions:
 
 The key difference is that the managed transaction uses a callback that expects a promise to be returned to it while the unmanaged transaction returns a promise.
 
-# Managed transaction (auto-callback)
+## Managed transaction (auto-callback)
 
 Managed transactions handle committing or rolling back the transaction automagically. You start a managed transaction by passing a callback to `sequelize.transaction`.
 
@@ -55,22 +57,22 @@ return sequelize.transaction(function (t) {
 In the examples above, the transaction is still manually passed, by passing `{ transaction: t }` as the second argument. To automatically pass the transaction to all queries you must install the [continuation local storage](https://github.com/othiym23/node-continuation-local-storage) (CLS) module and instantiate a namespace in your own code:
 
 ```js
-var cls = require('continuation-local-storage'),
+const cls = require('continuation-local-storage'),
     namespace = cls.createNamespace('my-very-own-namespace');
 ```
 
-To enable CLS you must tell sequelize which namespace to use by setting it as a property on the sequelize constructor:
+To enable CLS you must tell sequelize which namespace to use by using a static method of the sequelize constructor:
 
 ```js
-var Sequelize = require('sequelize');
-Sequelize.cls = namespace;
+const Sequelize = require('sequelize');
+Sequelize.useCLS(namespace);
 
 new Sequelize(....);
 ```
 
-Notice, that the `cls` property must be set on the *constructor*, not on an instance of sequelize. This means that all instances will share the same namespace, and that CLS is all-or-nothing - you cannot enable it only for some instances.
+Notice, that the `useCLS()` method is on the *constructor*, not on an instance of sequelize. This means that all instances will share the same namespace, and that CLS is all-or-nothing - you cannot enable it only for some instances.
 
-CLS works like a thread-local storage for callbacks. What this means in practice is, that different callback chains can access local variables by using the CLS namespace. When CLS is enabled sequelize will set the `transaction` property on the namespace when a new transaction is created. Since variables set within a callback chain are private to that chain several concurrent transactions can exist at the same time:
+CLS works like a thread-local storage for callbacks. What this means in practice is that different callback chains can access local variables by using the CLS namespace. When CLS is enabled sequelize will set the `transaction` property on the namespace when a new transaction is created. Since variables set within a callback chain are private to that chain several concurrent transactions can exist at the same time:
 
 ```js
 sequelize.transaction(function (t1) {
@@ -91,7 +93,9 @@ sequelize.transaction(function (t1) {
 });
 ```
 
-# Concurrent/Partial transactions
+After you've used `Sequelize.useCLS()` all promises returned from sequelize will be patched to maintain CLS context. CLS is a complicated subject - more details in the docs for [cls-bluebird](https://www.npmjs.com/package/cls-bluebird), the patch used to make bluebird promises work with CLS.
+
+## Concurrent/Partial transactions
 
 You can have concurrent transactions within a sequence of queries or have some of them excluded from any transactions. Use the `{transaction: }` option to control which transaction a query belong to:
 
@@ -110,7 +114,7 @@ sequelize.transaction(function (t1) {
 });
 ```
 
-# Isolation levels
+## Isolation levels
 The possible isolations levels to use when starting a transaction:
 
 ```js
@@ -120,7 +124,7 @@ Sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ  // "REPEATABLE READ"
 Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE // "SERIALIZABLE"
 ```
 
-By default, sequelize uses "REPEATABLE READ". If you want to use a different isolation level, pass in the desired level as the first argument:
+By default, sequelize uses the isolation level of the database. If you want to use a different isolation level, pass in the desired level as the first argument:
 
 ```js
 return sequelize.transaction({
@@ -132,7 +136,9 @@ return sequelize.transaction({
   });
 ```
 
-# Unmanaged transaction (then-callback)
+Note: The SET ISOLATION LEVEL queries are not logged in case of MSSQL as the specified isolationLevel is passed directly to tedious
+
+## Unmanaged transaction (then-callback)
 Unmanaged transactions force you to manually rollback or commit the transaction. If you don't do that, the transaction will hang until it times out. To start an unmanaged transaction, call `sequelize.transaction()` without a callback (you can still pass an options object) and call `then` on the returned promise. Notice that `commit()` and `rollback()` returns a promise.
 
 ```js
@@ -153,7 +159,7 @@ return sequelize.transaction().then(function (t) {
 });
 ```
 
-# Options
+## Options
 The `transaction` method can be called with an options object as the first argument, that
 allows the configuration of the transaction.
 
@@ -203,7 +209,7 @@ sequelize.transaction({
 })
 ```
 
-# Usage with other sequelize methods
+## Usage with other sequelize methods
 
 The `transaction` option goes with most other options, which are usually the first argument of a method.
 For methods that take values, like `.create`, `.update()`, `.updateAttributes()` etc. `transaction` should be passed to the option in the second argument.

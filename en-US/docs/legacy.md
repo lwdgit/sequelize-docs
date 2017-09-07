@@ -1,3 +1,5 @@
+# Working with legacy tables
+
 While out of the box Sequelize will seem a bit opinionated it's trivial to both legacy and forward proof your application by defining (otherwise generated) table and field names.
 
 ## Tables
@@ -50,7 +52,7 @@ Organization.belongsTo(User, {foreignKey: 'owner_id'});
 User.hasOne(Organization, {foreignKey: 'owner_id'});
 
 // 1:M
-Project.hasMany(Task, {foreignkey: 'tasks_pk'});
+Project.hasMany(Task, {foreignKey: 'tasks_pk'});
 Task.belongsTo(Project, {foreignKey: 'tasks_pk'});
 
 // N:M

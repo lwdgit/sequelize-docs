@@ -1,19 +1,21 @@
+# Model usage
+
 ## Data retrieval / Finders
 
-Finder methods are intended to query data from the database. They do *not* return plain objects but instead return model instances. Because finder methods return model instances you can call any model instance member on the result as described in the documentation for [*instances*](http://docs.sequelizejs.com/en/latest/docs/instances/).
+Finder methods are intended to query data from the database. They do *not* return plain objects but instead return model instances. Because finder methods return model instances you can call any model instance member on the result as described in the documentation for [*instances*](/manual/tutorial/instances.html).
 
 In this document we'll explore what finder methods can do:
 
-### find - Search for one specific element in the database
+### `find` - Search for one specific element in the database
 ```js
 // search for known ids
-Project.findById(123).then(function(project) {
+Project.findById(123).then(project => {
   // project will be an instance of Project and stores the content of the table entry
   // with id 123. if such an entry is not defined you will get null
 })
 
 // search for attributes
-Project.findOne({ where: {title: 'aProject'} }).then(function(project) {
+Project.findOne({ where: {title: 'aProject'} }).then(project => {
   // project will be the first entry of the Projects table with the title 'aProject' || null
 })
 
@@ -21,13 +23,13 @@ Project.findOne({ where: {title: 'aProject'} }).then(function(project) {
 Project.findOne({
   where: {title: 'aProject'},
   attributes: ['id', ['name', 'title']]
-}).then(function(project) {
+}).then(project => {
   // project will be the first entry of the Projects table with the title 'aProject' || null
   // project.title will contain the name of the project
 })
 ```
 
-### findOrCreate - Search for a specific element or create it if not available
+### `findOrCreate` - Search for a specific element or create it if not available
 
 The method `findOrCreate` can be used to check if a certain element already exists in the database. If that is the case the method will result in a respective instance. If the element does not yet exist, it will be created.
 
@@ -36,55 +38,58 @@ Let's assume we have an empty database with a `User` model which has a `username
 ```js
 User
   .findOrCreate({where: {username: 'sdepold'}, defaults: {job: 'Technical Lead JavaScript'}})
-  .spread(function(user, created) {
+  .spread((user, created) => {
     console.log(user.get({
       plain: true
     }))
     console.log(created)
 
     /*
-      {
+     findOrCreate returns an array containing the object that was found or created and a boolean that will be true if a new object was created and false if not, like so:
+     
+    [ {
         username: 'sdepold',
         job: 'Technical Lead JavaScript',
         id: 1,
         createdAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET),
         updatedAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET)
-      }
-      created: true
+      },
+      true ]
+      
+ In the example above, the "spread" on line 39 divides the array into its 2 parts and passes them as arguments to the callback function defined beginning at line 39, which treats them as "user" and "created" in this case. (So "user" will be the object from index 0 of the returned array and "created" will equal "true".)
     */
   })
 ```
 
 The code created a new instance. So when we already have an instance ...
 ```js
-User
-  .create({ username: 'fnord', job: 'omnomnom' })
-  .then(function() {
-    User
-      .findOrCreate({where: {username: 'fnord'}, defaults: {job: 'something else'}})
-      .spread(function(user, created) {
-        console.log(user.get({
-          plain: true
-        }))
-        console.log(created)
+User.create({ username: 'fnord', job: 'omnomnom' })
+  .then(() => User.findOrCreate({where: {username: 'fnord'}, defaults: {job: 'something else'}}))
+  .spread((user, created) => {
+    console.log(user.get({
+      plain: true
+    }))
+    console.log(created)
 
-        /*
-          {
-            username: 'fnord',
-            job: 'omnomnom',
-            id: 2,
-            createdAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET),
-            updatedAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET)
-          }
-          created: false
-        */
-      })
+    /*
+    In this example, findOrCreate returns an array like this:
+    [ {
+        username: 'fnord',
+        job: 'omnomnom',
+        id: 2,
+        createdAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET),
+        updatedAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET)
+      },
+      false
+    ]
+    The array returned by findOrCreate gets spread into its 2 parts by the "spread" on line 69, and the parts will be passed as 2 arguments to the callback function beginning on line 69, which will then treat them as "user" and "created" in this case. (So "user" will be the object from index 0 of the returned array and "created" will equal "false".)
+    */
   })
 ```
 
 ... the existing entry will not be changed. See the `job` of the second user, and the fact that created was false.
 
-### findAndCountAll - Search for multiple elements in the database, returns both data and total count
+### `findAndCountAll` - Search for multiple elements in the database, returns both data and total count
 
 This is a convenience method that combines`findAll` and `count` (see below) this is useful when dealing with queries related to pagination where you want to retrieve data with a `limit` and `offset` but also need to know the total number of records that match the query:
 
@@ -103,7 +108,7 @@ Project
      offset: 10,
      limit: 2
   })
-  .then(function(result) {
+  .then(result => {
     console.log(result.count);
     console.log(result.rows);
   });
@@ -137,30 +142,25 @@ The query above will only count users who have an active profile, because `requi
 
 The options object that you pass to `findAndCountAll` is the same as for `findAll` (described below).
 
-### findAll - Search for multiple elements in the database
+### `findAll` - Search for multiple elements in the database
 ```js
 // find multiple entries
-Project.findAll().then(function(projects) {
+Project.findAll().then(projects => {
   // projects will be an array of all Project instances
 })
 
 // also possible:
-Project.all().then(function(projects) {
+Project.all().then(projects => {
   // projects will be an array of all Project instances
 })
 
 // search for specific attributes - hash usage
-Project.findAll({ where: { name: 'A Project' } }).then(function(projects) {
+Project.findAll({ where: { name: 'A Project' } }).then(projects => {
   // projects will be an array of Project instances with the specified name
 })
 
-// search with string replacements
-Project.findAll({ where: ["id > ?", 25] }).then(function(projects) {
-  // projects will be an array of Projects having a greater id than 25
-})
-
 // search within a specific range
-Project.findAll({ where: { id: [1,2,3] } }).then(function(projects) {
+Project.findAll({ where: { id: [1,2,3] } }).then(projects => {
   // projects will be an array of Projects having the id 1, 2 or 3
   // this is actually doing an IN query
 })
@@ -223,7 +223,7 @@ Project.findOne({
 })
 ```
 
-Both pieces of code code will generate the following:
+Both pieces of code will generate the following:
 
 ```sql
 SELECT *
@@ -256,7 +256,7 @@ SELECT *
 FROM `Projects`
 WHERE (
   `Projects`.`name` = 'a project'
-   AND NOT (`Projects`.`id` IN (1,2,3) OR `Projects`.`array` @> ARRAY[1,2,3]::INTEGER[])
+   AND NOT (`Projects`.`id` IN (1,2,3) OR `Projects`.`array` @> ARRAY[3,4,5]::INTEGER[])
 )
 LIMIT 1;
 ```
@@ -305,8 +305,6 @@ something.findOne({
     // will return otherfunction(`col1`, 12, 'lalala') DESC
     [sequelize.fn('otherfunction', sequelize.fn('awesomefunction', sequelize.col('col'))), 'DESC']
     // will return otherfunction(awesomefunction(`col`)) DESC, This nesting is potentially infinite!
-    [{ raw: 'otherfunction(awesomefunction(`col`))' }, 'DESC']
-    // This won't be quoted, but direction will be added
   ]
 })
 ```
@@ -331,21 +329,21 @@ Sometimes you might be expecting a massive dataset that you just want to display
 Project.findAll({ where: { ... }, raw: true })
 ```
 
-### count - Count the occurrences of elements in the database
+### `count` - Count the occurrences of elements in the database
 
 There is also a method for counting database objects:
 
 ```js
-Project.count().then(function(c) {
+Project.count().then(c =>
   console.log("There are " + c + " projects!")
 })
 
-Project.count({ where: ["id > ?", 25] }).then(function(c) {
+Project.count({ where: {'id': {$gt: 25}} }).then(c =>
   console.log("There are " + c + " projects with an id greater than 25.")
 })
 ```
 
-### max - Get the greatest value of a specific attribute within a specific table
+### `max` - Get the greatest value of a specific attribute within a specific table
 
 And here is a method for getting the max value of an attribute:f
 
@@ -356,16 +354,16 @@ And here is a method for getting the max value of an attribute:f
   the second one is 5 years old,
   the third one is 40 years old.
 */
-Project.max('age').then(function(max) {
+Project.max('age').then(max => {
   // this will return 40
 })
 
-Project.max('age', { where: { age: { lt: 20 } } }).then(function(max) {
+Project.max('age', { where: { age: { lt: 20 } } }).then(max => {
   // will be 10
 })
 ```
 
-### min - Get the least value of a specific attribute within a specific table
+### `min` - Get the least value of a specific attribute within a specific table
 
 And here is a method for getting the min value of an attribute:
 
@@ -376,16 +374,16 @@ And here is a method for getting the min value of an attribute:
   the second one is 5 years old,
   the third one is 40 years old.
 */
-Project.min('age').then(function(min) {
+Project.min('age').then(min => {
   // this will return 5
 })
 
-Project.min('age', { where: { age: { $gt: 5 } } }).then(function(min) {
+Project.min('age', { where: { age: { $gt: 5 } } }).then(min => {
   // will be 10
 })
 ```
 
-### sum - Sum the value of specific attributes
+### `sum` - Sum the value of specific attributes
 
 In order to calculate the sum over a specific column of a table, you can
 use the `sum` method.
@@ -397,11 +395,11 @@ use the `sum` method.
   the second one is 5 years old,
   the third one is 40 years old.
 */
-Project.sum('age').then(function(sum) {
+Project.sum('age').then(sum => {
   // this will return 55
 })
 
-Project.sum('age', { where: { age: { $gt: 5 } } }).then(function(sum) {
+Project.sum('age', { where: { age: { $gt: 5 } } }).then(sum => {
   // will be 50
 })
 ```
@@ -411,15 +409,15 @@ Project.sum('age', { where: { age: { $gt: 5 } } }).then(function(sum) {
 When you are retrieving data from the database there is a fair chance that you also want to get associations with the same query - this is called eager loading. The basic idea behind that, is the use of the attribute `include` when you are calling `find` or `findAll`. Lets assume the following setup:
 
 ```js
-var User = sequelize.define('user', { name: Sequelize.STRING })
-  , Task = sequelize.define('task', { name: Sequelize.STRING })
-  , Tool = sequelize.define('tool', { name: Sequelize.STRING })
+const User = sequelize.define('user', { name: Sequelize.STRING })
+const Task = sequelize.define('task', { name: Sequelize.STRING })
+const Tool = sequelize.define('tool', { name: Sequelize.STRING })
 
 Task.belongsTo(User)
 User.hasMany(Task)
 User.hasMany(Tool, { as: 'Instruments' })
 
-sequelize.sync().then(function() {
+sequelize.sync().then(() => {
   // this is where we continue ...
 })
 ```
@@ -427,7 +425,7 @@ sequelize.sync().then(function() {
 OK. So, first of all, let's load all tasks with their associated user.
 
 ```js
-Task.findAll({ include: [ User ] }).then(function(tasks) {
+Task.findAll({ include: [ User ] }).then(tasks => {
   console.log(JSON.stringify(tasks))
 
   /*
@@ -453,7 +451,7 @@ Notice that the accessor (the `User` property in the resulting instance) is sing
 Next thing: Loading of data with many-to-something associations!
 
 ```js
-User.findAll({ include: [ Task ] }).then(function(users) {
+User.findAll({ include: [ Task ] }).then(users => {
   console.log(JSON.stringify(users))
 
   /*
@@ -480,7 +478,51 @@ Notice that the accessor (the `Tasks` property in the resulting instance) is plu
 If an association is aliased (using the `as` option), you must specify this alias when including the model. Notice how the user's `Tool`s are aliased as `Instruments` above. In order to get that right you have to specify the model you want to load, as well as the alias:
 
 ```js
-User.findAll({ include: [{ model: Tool, as: 'Instruments' }] }).then(function(users) {
+User.findAll({ include: [{ model: Tool, as: 'Instruments' }] }).then(users => {
+  console.log(JSON.stringify(users))
+
+  /*
+    [{
+      "name": "John Doe",
+      "id": 1,
+      "createdAt": "2013-03-20T20:31:45.000Z",
+      "updatedAt": "2013-03-20T20:31:45.000Z",
+      "Instruments": [{
+        "name": "Toothpick",
+        "id": 1,
+        "createdAt": null,
+        "updatedAt": null,
+        "userId": 1
+      }]
+    }]
+  */
+})
+```
+
+You can also include by alias name by specifying a string that matches the association alias:
+
+```js
+User.findAll({ include: ['Instruments'] }).then(users => {
+  console.log(JSON.stringify(users))
+
+  /*
+    [{
+      "name": "John Doe",
+      "id": 1,
+      "createdAt": "2013-03-20T20:31:45.000Z",
+      "updatedAt": "2013-03-20T20:31:45.000Z",
+      "Instruments": [{
+        "name": "Toothpick",
+        "id": 1,
+        "createdAt": null,
+        "updatedAt": null,
+        "userId": 1
+      }]
+    }]
+  */
+})
+
+User.findAll({ include: [{ association: 'Instruments' }] }).then(users => {
   console.log(JSON.stringify(users))
 
   /*
@@ -510,7 +552,7 @@ User.findAll({
         as: 'Instruments',
         where: { name: { $like: '%ooth%' } }
     }]
-}).then(function(users) {
+}).then(users => {
     console.log(JSON.stringify(users))
 
     /*
@@ -548,6 +590,53 @@ User.findAll({
 When an eager loaded model is filtered using `include.where` then `include.required` is implicitly set to
 `true`. This means that an inner join is done returning parent models with any matching children.
 
+### Top level where with eagerly loaded models
+
+To move the where conditions from an included model from the `ON` condition to the top level `WHERE` you can use the `'$nested.column$'` syntax:
+
+```js
+User.findAll({
+    where: {
+        '$Instruments.name$': { $iLike: '%ooth%' }
+    },
+    include: [{
+        model: Tool,
+        as: 'Instruments'
+    }]
+}).then(users => {
+    console.log(JSON.stringify(users));
+
+    /*
+      [{
+        "name": "John Doe",
+        "id": 1,
+        "createdAt": "2013-03-20T20:31:45.000Z",
+        "updatedAt": "2013-03-20T20:31:45.000Z",
+        "Instruments": [{
+          "name": "Toothpick",
+          "id": 1,
+          "createdAt": null,
+          "updatedAt": null,
+          "userId": 1
+        }]
+      }],
+
+      [{
+        "name": "John Smith",
+        "id": 2,
+        "createdAt": "2013-03-20T20:31:45.000Z",
+        "updatedAt": "2013-03-20T20:31:45.000Z",
+        "Instruments": [{
+          "name": "Toothpick",
+          "id": 1,
+          "createdAt": null,
+          "updatedAt": null,
+          "userId": 1
+        }]
+      }],
+    */
+```
+
 ### Including everything
 
 To include all attributes, you can pass a single object with `all: true`:
@@ -558,14 +647,14 @@ User.findAll({ include: [{ all: true }]});
 
 ### Including soft deleted records
 
-In case you want to eager load soft deleted records you can do that by setting `include.paranoid` to `true`
+In case you want to eager load soft deleted records you can do that by setting `include.paranoid` to `false`
 
 ```js
 User.findAll({
     include: [{
         model: Tool,
         where: { name: { $like: '%ooth%' } },
-        paranoid: true // query and loads the soft deleted records
+        paranoid: false // query and loads the soft deleted records
     }]
 });
 ```
@@ -610,7 +699,7 @@ User.findAll({
       {model: Teacher, include: [ /* etc */]}
     ]}
   ]
-}).then(function(users) {
+}).then(users => {
   console.log(JSON.stringify(users))
 
   /*
@@ -649,7 +738,7 @@ User.findAll({
       required: false
     }]
   }]
-}).then(function(users) {
+}).then(users => {
   /* ... */
 })
 ```
